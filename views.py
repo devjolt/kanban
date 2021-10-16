@@ -27,7 +27,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
-            return redirect("kanban_app:home")
+            return redirect("kanban_app:login")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render (request=request, template_name="kanban_app/user_auth/register.html", context={"register_form":form})
@@ -58,7 +58,7 @@ def logout_request(request):
     return redirect("main:login")
 
 class Landing(TemplateView):
-    template_name = 'kanban_app/project.html'
+    template_name = 'kanban_app/landing.html'
 
 class ProjectList(generic.ListView):
     #all posts belonging to user
@@ -129,7 +129,7 @@ def project_view(request, project_name):
             }
             return render(request, 'kanban_app/project.html', context)
     else:
-        return redirect('kanban_app:landing')
+        return redirect('kanban_app:login')
 
 def create_project(request, project_name):
     if request.user.is_authenticated:
@@ -238,3 +238,5 @@ def create_project(request, project_name):
                 'new_position':new_position,
             }
             return render(request, 'kanban_app/create_project.html', context)
+    else:
+        return redirect('kanban_app:login')
