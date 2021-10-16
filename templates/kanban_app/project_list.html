@@ -1,0 +1,16 @@
+{% extends 'kanban_app/base.html' %}
+
+{% block content %}
+
+    {% for project in object_list %}
+        <a href='/{{project.name}}/project'>{{project.name}}</a>
+    {% endfor %}
+
+
+    <a href='/new/create_project'>Create project</a>    
+
+    <p>Create a project using a template:</p>
+    {% for project in object_list %}
+        <a href='/{{project.name}}/create_project'>{{project.name}}</a>
+    {% endfor %}   
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'kanban_app/base.html' %}
+
+
+
+{% block content %}
+
+<a href='/home/'>Home</a>
+
+<h1>{{project.name}}</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name='item_name' value='New item'>
+    <input type="datetime-local" name="target_time">
+    <!--{{ NewItemForm }}-->
+    <input type="submit" name='submit' value="New item">
+</form>
+
+
+<div class='columns-grid'>
+    {% for column in columns %}
+    <div class='column'>
+        {{column.name}}
+        <div class='item-grid'>
+        {% for item in column.items.all %} 
+            <div class='item'>
+                {{item.name}}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class='item-button-grid'>
+                        <input type="hidden" name='column_position' value = '{{column.position}}'>
+                        <input type="hidden" name='column_id' value = '{{column.id}}'>
+                        <input type="hidden" name='item_id' value = '{{item.id}}'>
+                        <input type="submit" name='submit' value="Regress">
+                        <input type="submit" name='submit' value="Progress">
+                    </div>
+                    <input type="submit" name='submit' value="Delete">
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+<script>
+    $(function () {
+      $("#id_date").datetimepicker({
+        format: 'd/m/Y H:i',
+      });
+    });
+</script>
