@@ -2,15 +2,17 @@
 
 {% block content %}
 
+    <a href='/kanban_app/logout'>Logout</a>
+
     {% for project in object_list %}
-        <a href='/{{project.name}}/project'>{{project.name}}</a>
+        <a href='../{{project.name}}/project'>{{project.name}}</a>
     {% endfor %}
 
 
-    <a href='/new/create_project'>Create project</a>    
+    <a href='../new/create_project'>Create project</a>    
 
     <p>Create a project using a template:</p>
     {% for project in object_list %}
-        <a href='/{{project.name}}/create_project'>{{project.name}}</a>
+        <a href='../{{project.name}}/create_project'>{{project.name}}</a>
     {% endfor %}   
 {% endblock %}

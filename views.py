@@ -2,23 +2,20 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic.base import TemplateView
 
-from .models import User, Project, Column, Item
+from .models import Project, Column, Item
 
 #atuthentication stuff
 from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
+
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth.decorators import login_required
 
 #forms
-from .forms import NewUserForm, NewItemForm
-"""
-from .forms import HomeChooseProjectForm, HomeNewProjectForm
-from .forms import ProjectAddItemForm, ProjectMoveItemForm, ProjectDeleteItemForm
-from .forms import NewProjectExistingTemplateForm, NewProjectNewTemplateForm
-from .forms import TemplateNewColumnForm, TemplateDeleteColumnForm
-"""
+from .forms import NewItemForm
+
 
 def register_request(request):
     if request.method == "POST":
@@ -55,7 +52,7 @@ def logout_request(request):
         a = request.POST.get('')
     logout(request)
     messages.info(request, "You have successfully logged out.") 
-    return redirect("main:login")
+    return redirect("kanban_app:login")
 
 class Landing(TemplateView):
     template_name = 'kanban_app/landing.html'
