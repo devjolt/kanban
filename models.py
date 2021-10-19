@@ -26,6 +26,7 @@ class Column(models.Model):
 class Project(models.Model):
     user            = models.ForeignKey(User, on_delete = models.CASCADE, default=1)#associated with user
     name            = models.CharField(max_length = 50, default = 'name your project')
+    priority        = models.PositiveIntegerField(default = 3)
     columns         = models.ManyToManyField(Column, related_name='columns', blank = True)
     template        = models.BooleanField(default=True)
 

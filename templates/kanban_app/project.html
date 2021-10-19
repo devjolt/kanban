@@ -1,12 +1,15 @@
 {% extends 'kanban_app/base.html' %}
 
-
-
 {% block content %}
 
-<a href='/kanban_app/home'>Home</a>
+<nav>
+    <a class='nav-item' href='/kanban_app/home'>Home</a>
+    <a class='nav-item' href='../delete'>Delete project</a>
+    <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+</nav>
 
 <h1>{{project.name}}</h1>
+<br>
 <form method="post">
     {% csrf_token %}
     <input type="text" name='item_name' value='New item'>
@@ -14,15 +17,15 @@
     <!--{{ NewItemForm }}-->
     <input type="submit" name='submit' value="New item">
 </form>
-
-
+<br>
 <div class='columns-grid'>
     {% for column in columns %}
     <div class='column'>
-        {{column.name}}
+        <h2>{{column.name}}</h2>
         <div class='item-grid'>
         {% for item in column.items.all|dictsort:"priority" %} 
             <div class='item'>
+                <br>
                 {{item.name}}
                 (Priority {{item.priority}})
                 <form method="post">
@@ -34,12 +37,11 @@
                     <input type="hidden" name='item_id' value = '{{item.id}}'>
    
                     <div class='item-button-grid'>
-                        <input type="submit" name='submit' value="<<">
-                        <input type="submit" name='submit' value=">>">
-                        
+                        <input class='item-button left-button' type="submit" name='submit' value="<<">
+                        <input class='item-button' type="submit" name='submit' value="Delete">
+                        <input class='item-button right-button' type="submit" name='submit' value=">>">     
                     </div>
                     <input type="submit" name='submit' value="Higher">
-                    <input type="submit" name='submit' value="Delete">
                     <input type="submit" name='submit' value="Lower">
                 </form>
             </div>

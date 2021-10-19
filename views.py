@@ -214,7 +214,7 @@ def create_project(request, project_name):
             column_id = request.POST['column_id']
 
             column=Column.objects.filter(id=column_id).get()#current column
-            if request.POST['submit']=='Delete':
+            if request.POST['submit']=='X':
                 print(project.columns.all())
                 project.columns.remove(column.id)
                 print(project.columns.all())

@@ -18,16 +18,89 @@
                 padding:0;
                 font-family: 'Open Sans', sans-serif;
             }
-
+            main{
+                background-image: linear-gradient(rgb(0, 2, 143) 70%, rgb(255, 255, 255));
+                min-height: 70vh;
+                color:white;
+                margin:10px;
+                padding-top: 10px;
+                border-radius: 10px;
+            }
+            a{
+                text-decoration: none;
+                width: 100vw;
+            }
+            nav{
+                background: white;
+                margin:0px;
+                padding:0px;                
+            }
+            .nav-item{
+                font-size:x-large;
+                max-width:content;
+                transition:0.5s;
+                padding:2px;
+                margin:0px;
+            }
+            .nav-item a{
+                text-decoration: none;
+                color:rgb(0, 2, 143);
+                width: 100vw;
+            }
+            .nav-item:hover{
+                background: rgb(0, 2, 143);
+                color:white;
+                transition:0.5s;
+            }
+            .project-list{
+                display:grid;
+                grid-template-columns: auto;
+            }
+            .project-list-item{
+                text-decoration: none;
+                color:white;
+            }
+            .form-container{
+                padding:10px;
+                justify-items: center;
+            }
+            .project-name-container{
+                display:grid;
+                grid-template-columns: auto auto; 
+            }
+            .left{
+                justify-self: left;
+            }
+            .right{
+                justify-self: right;
+            }
+            .reset-save-quit-container{
+                display:grid;
+                grid-template-columns: 25% 25% 25%; 
+                justify-content: center;
+            }
+            
+            
+            .create-column-container{
+                justify-items: center;
+            }
             .columns-grid {
-                display:flex;
-                
+                display:inline-flex;
             }
 
             .column {
+                width: 200px;
+                padding:2px;
+                justify-content: center;
+                border-right:solid;
+                border-color: white;
+                border-width: 2px;
+            }
+            .create-column-form{
                 
             }
-
+            .left-right-delete-button-array{
+            }
             .items-grid {
                 display:grid;
                 grid-template-columns: auto;
@@ -38,18 +111,44 @@
             }
             .item-button-grid{
                 display:grid;
-                grid-template-columns: auto auto;
+                grid-template-columns: auto auto auto;
             }
-            .item-button{
 
+            .item-button{
+                background-color:rgb(0, 2, 143);
+                border-style:solid;
+                border-color: white;
+                border-width: 1px;
+                color:white;
+                transition: 0.5s;
             }
+            .left-button{
+                border-bottom-left-radius: 10px;
+                border-top-left-radius: 10px;
+            }
+            .right-button{
+                border-bottom-right-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+            .item-button:hover{
+                background-color:white;
+                border-style:solid;
+                border-color: rgb(0, 2, 143);
+                color:rgb(0, 2, 143);
+                transition: 0.5s;
+                cursor:pointer;
+            }
+            
 
 
         </style>
     </head>
     <body>
-        {% block content %}
+        <main>
+            {% block content %}
 
-        {% endblock %}
+
+            {% endblock %}
+        </main>
     </body>
 </html>
