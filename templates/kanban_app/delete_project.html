@@ -3,11 +3,19 @@
 
 
 {% block content %}
-    <a href='/kanban_app/home'>Home</a>
 
-    Select project to delete
-    {% for project in projects %}
-        <a href='../{{project.name}}/confirm_delete'>{{project.name}}</a>
-    {% endfor %}
+    <nav>
+        <a class='nav-item' href='/kanban_app/home'>Home</a>
+        <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+    </nav>
+    
+    <br>
+    <h2>Select project to delete</h2>
 
+    <div class='project-list'>
+        {% for project in projects %}
+            <a class='project-list-item' href='../{{project.name}}/confirm_delete'>{{project.name}}</a>
+        {% endfor %}
+    </div>
+    
 {% endblock %}
