@@ -21,19 +21,26 @@
     <div class='column'>
         {{column.name}}
         <div class='item-grid'>
-        {% for item in column.items.all %} 
+        {% for item in column.items.all|dictsort:"priority" %} 
             <div class='item'>
                 {{item.name}}
+                (Priority {{item.priority}})
                 <form method="post">
+
                     {% csrf_token %}
+                    
+                    <input type="hidden" name='column_position' value = '{{column.position}}'>
+                    <input type="hidden" name='column_id' value = '{{column.id}}'>
+                    <input type="hidden" name='item_id' value = '{{item.id}}'>
+   
                     <div class='item-button-grid'>
-                        <input type="hidden" name='column_position' value = '{{column.position}}'>
-                        <input type="hidden" name='column_id' value = '{{column.id}}'>
-                        <input type="hidden" name='item_id' value = '{{item.id}}'>
-                        <input type="submit" name='submit' value="Regress">
-                        <input type="submit" name='submit' value="Progress">
+                        <input type="submit" name='submit' value="<<">
+                        <input type="submit" name='submit' value=">>">
+                        
                     </div>
+                    <input type="submit" name='submit' value="Higher">
                     <input type="submit" name='submit' value="Delete">
+                    <input type="submit" name='submit' value="Lower">
                 </form>
             </div>
         {% endfor %}

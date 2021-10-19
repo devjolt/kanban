@@ -1,0 +1,13 @@
+{% extends 'kanban_app/base.html' %}
+
+
+
+{% block content %}
+    <a href='/kanban_app/home'>Home</a>
+
+    Select project to delete
+    {% for project in projects %}
+        <a href='../{{project.name}}/confirm_delete'>{{project.name}}</a>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'kanban_app/base.html' %}
+
+
+
+{% block content %}
+
+<a href='/kanban_app/home'>Home</a>
+
+<h1>{{project.name}}</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" name='submit' value="Confirm delete">
+</form>
+
+
+<div class='columns-grid'>
+    {% for column in columns %}
+    <div class='column'>
+        {{column.name}}
+        <div class='item-grid'>
+        {% for item in column.items.all|dictsort:"priority" %} 
+            <div class='item'>
+                {{item.name}}
+                (Priority {{item.priority}})
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+<script>
+    $(function () {
+      $("#id_date").datetimepicker({
+        format: 'd/m/Y H:i',
+      });
+    });
+</script>

@@ -14,6 +14,9 @@ urlpatterns = [
     path("logout/", views.logout_request, name= "logout"),
 
     path("home/", views.ProjectList.as_view(), name= "home"),
+    
+    path("delete/", views.delete, name= "delete"),
+    path('<str:project_name>/confirm_delete/', views.confirm_delete, name='confirm_delete'),    
 
     path('<str:project_name>/project/', views.project_view, name='project_view'),
     path('<str:project_name>/create_project/', views.create_project, name='create_project')

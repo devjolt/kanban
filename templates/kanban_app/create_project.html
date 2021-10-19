@@ -12,25 +12,23 @@
     <input type="submit" name='submit' value="Reset">
     <input type="submit" name='submit' value="Save and use">
     <input type="submit" name='submit' value="Quit and forget">
-
+</form>
 
 
 <div class='columns-grid'>
     {% for column in columns %}
     <div class='column'>
         {{column.name}}
-        
+        <form method="post">
             {% csrf_token %}
             <div class='item-button-grid'>
                 <input type="hidden" name='column_id' value = '{{column.id}}'>
-                <input type="submit" name='submit' value="Backwards">
-                <input type="submit" name='submit' value="Forwards">
+                <input type="submit" name='submit' value="<<">
+                <input type="submit" name='submit' value=">>">
             </div>
             <input type="submit" name='submit' value="Delete">
-        
+        </form>
     </div>
     {% endfor %}
 </div>
-
-</form>
 {% endblock %}

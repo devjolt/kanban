@@ -70,6 +70,30 @@ class ProjectList(generic.ListView):
         bad_projects.delete()
         return context
 
+def delete(request):
+    if request.user.is_authenticated:
+        context = {
+            'projects':Project.objects.filter(user=request.user, template=False)
+        }
+        return render(request, 'kanban_app/delete_project.html', context)
+        
+def confirm_delete(request, project_name):
+    if request.user.is_authenticated:
+        user_id = request.user.id#used in both conditions
+        project = Project.objects.filter(user = user_id, name = project_name).get()
+        if request.method == 'POST':
+            if request.POST['submit']=='Confirm delete':
+                project.delete()
+                return redirect("kanban_app:home")
+        else:
+            columns = project.columns.all().order_by('position')
+            context = {
+                'project':project,#first we got this up above...
+                'columns':columns,
+            }
+            return render(request, 'kanban_app/confirm_delete.html', context)
+
+
 def project_view(request, project_name):
     if request.user.is_authenticated:
         user_id = request.user.id#used in both conditions
@@ -109,12 +133,27 @@ def project_view(request, project_name):
                     new_column = Column.objects.filter(position=new_position, columns__in=[project]).get()#get new column
                     new_column.items.add(item.id)#add to new column
 
-            if request.POST['submit']=='Regress':
+            if request.POST['submit']=='<<':
                 move_item(2, -2, column, item, column_position)
                 return refresh
-    
-            elif request.POST['submit']=='Progress':
+            elif request.POST['submit']=='>>':
                 move_item(len(project.columns.all())*2, 2, column, item, column_position)               
+                return refresh
+
+            def change_priority(limit, change, item):
+                print(item)
+                if item.priority != limit:
+                    item.priority += change
+                    item.save()
+            
+            if request.POST['submit']=='Higher':
+                print('higher')
+                change_priority(1, -1, item)
+                
+                return refresh
+            elif request.POST['submit']=='Lower':
+                print('lower')
+                change_priority(5, +1, item)
                 return refresh
 
         else:
@@ -147,7 +186,6 @@ def create_project(request, project_name):
 
             project=Project.objects.filter(user=user, name=project_name).get()
             
-            
             if request.POST['submit']=='Change name':
                 new_project_name = request.POST['project_name']
                 project.name=new_project_name
@@ -166,13 +204,16 @@ def create_project(request, project_name):
 
             columns=project.columns.all().order_by('position')
             if request.POST['submit']=='Create column':
-                column=Column(name=request.POST['column_name'], position=(len(columns)+1)*2)
+                new_position = (len(columns)+1)*2
+                print(new_position)
+                column=Column(name=request.POST['column_name'], position=new_position)
                 column.save()
                 project.columns.add(column.id)
                 return refresh
             
             column_id = request.POST['column_id']
-            column=Column.objects.filter(id=column_id).get()
+
+            column=Column.objects.filter(id=column_id).get()#current column
             if request.POST['submit']=='Delete':
                 print(project.columns.all())
                 project.columns.remove(column.id)
@@ -184,20 +225,21 @@ def create_project(request, project_name):
             #these require columns to be properly ordered, so...
             
             for i, col in enumerate(columns):
-                col.position=i+1*2#allows movement by one either side without juggling other columns
-            position=column.position
+                col.position=(i+1)*2#allows movement by one either side without juggling other columns
+            
+            position=column.position#position of the new column to be added
 
-            if request.POST['submit']=='Forwards':
+            if request.POST['submit']=='>>':
                 #2, 4, 6, 8 with 4 to move forward
                 if column.position != len(columns)*2:
                     column.position=position+3#requires position + 3
                     column.save()
-            elif request.POST['submit']=='Backwards':
+            elif request.POST['submit']=='<<':
                 #2, 4, 6, 8 with 4 to move backward
-                print(column.position)
                 if column.position!=2:
                     column.position=position-3#requires position - 3
                     column.save()
+
             return refresh
         
         else:
@@ -218,7 +260,10 @@ def create_project(request, project_name):
                 new_project = Project(user=user, name=new_project_name)
                 new_project.save()
                 for col in project.columns.all():
-                    new_project.columns.add(col)
+                    new_column = Column(name = col.name, position=col.position)
+                    new_column.save()
+                    new_project.columns.add(new_column)
+
                 project_name = new_project_name
                 return redirect('kanban_app:create_project', project_name)
 
