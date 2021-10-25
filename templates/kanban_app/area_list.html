@@ -1,0 +1,37 @@
+{% extends 'kanban_app/base.html' %}
+
+{% block content %}
+    <nav>
+        <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+    </nav>
+    <br>
+    <form method='POST'>
+        {% csrf_token %}
+        <input type="text" name='new' value='Area'>
+        <input type="submit" name='submit' value="Create new area">
+    </form>
+
+    {%if object_list|length > 0%}
+        {%for area in object_list%}
+            <br>
+            <div class='priority priority{{area.priority}}'>
+                <a href= "/kanban_app/{{area.name}}"><h1>{{area.name}}</h1></a>
+                (Priority {{area.priority}})
+                <form method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name='priority' value="{{area.id}}">
+                    <input type="submit" name='submit' value="Higher">
+                    <input type="submit" name='submit' value="Lower">
+                </form>
+                <div class='area-list-projects'>
+                {%for project in area.projects.all%}
+                    <a class='area-list-project' href= "/kanban_app/{{area.name}}/{{project.name}}">{{project.name}}</a>
+                {%endfor%}
+                </div>    
+                <a href="/kanban_app/{{area.name}}/new/create_project">Add a project</a>
+                <a href="/kanban_app/{{area.name}}/delete_area">Delete this area</a>
+            </div>
+        {%endfor%}
+    {%endif%}    
+
+{% endblock %}

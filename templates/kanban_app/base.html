@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
     
-        
         <style>
             *{
                 margin:0;
@@ -28,6 +27,7 @@
             }
             a{
                 text-decoration: none;
+                color:white;
                 width: 100vw;
             }
             nav{
@@ -41,10 +41,9 @@
                 transition:0.5s;
                 padding:2px;
                 margin:0px;
+                color:rgb(0, 2, 143)
             }
             .nav-item a{
-                text-decoration: none;
-                color:rgb(0, 2, 143);
                 width: 100vw;
             }
             .nav-item:hover{
@@ -56,6 +55,19 @@
                 text-decoration: none;
                 color:white;
             }
+
+            .area-list-projects{
+            }
+            .area-list-project{
+                font-size: large;
+                font-weight: 300;
+                margin:5px;
+                padding:2px;
+                background:white;
+                border-radius: 10px;
+                color:rgb(0, 2, 143);
+            }
+
             .project-list{
                 display:grid;
                 grid-template-columns: auto;
@@ -142,8 +154,41 @@
                 transition: 0.5s;
                 cursor:pointer;
             }
-            
 
+            .priority{
+                transition:1s;
+            }
+            
+            
+            .priority:hover{
+                border:none;
+                transition:0.5s;
+            }
+            
+            .priority1{
+                border-left: 35px solid rgb(0, 204, 255);
+                transition:0.5s;
+            }
+
+            .priority2{
+                border-left: 28px solid lime;
+                transition:0.5s;
+            }
+
+            .priority3{
+                border-left: 21px solid yellow;
+                transition:0.5s;
+            }
+            
+            .priority4{
+                border-left: 14px solid orange;
+                transition:0.5s;
+            }
+            
+            .priority5{
+                border-left: 7px solid red;
+                transition:0.5s;
+            }
 
         </style>
     </head>

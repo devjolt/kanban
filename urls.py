@@ -13,11 +13,13 @@ urlpatterns = [
     path("login/", views.login_request, name="login"),
     path("logout/", views.logout_request, name= "logout"),
 
-    path("home/", views.ProjectList.as_view(), name= "home"),
+    #paths handling areas with only project names
+    path("home/", views.AreaList.as_view(), name= "areas"),
+    path('<str:area>/delete_area/',views.AreaDelete.as_view(), name='confirm_delete_area'),
+    path('<str:area>/',views.AreaView.as_view(), name='area'),
     
-    path("delete/", views.delete, name= "delete"),
-    path('<str:project_name>/confirm_delete/', views.confirm_delete, name='confirm_delete'),    
-
-    path('<str:project_name>/project/', views.project_view, name='project_view'),
-    path('<str:project_name>/create_project/', views.create_project, name='create_project')
+    path('<str:area>/<str:project>/create_project/',views.ProjectCreate.as_view(),name='create_project'),
+    path('<str:area>/<str:project>/delete_project/',views.ProjectDelete.as_view(),name='delete_project'),
+    path('<str:area>/<str:project>/',views.ProjectView.as_view(),name='project'),
+    #path('archive/',name='archive'),
 ]

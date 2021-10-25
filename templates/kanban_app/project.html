@@ -4,6 +4,7 @@
 
 <nav>
     <a class='nav-item' href='/kanban_app/home'>Home</a>
+    <a class='nav-item' href='/kanban_app/{{area.name}}'>Return to {{area.name}}</a>
     <a class='nav-item' href='/kanban_app/logout'>Logout</a>
 </nav>
 
@@ -23,8 +24,8 @@
         <h2>{{column.name}}</h2>
         <div class='item-grid'>
         {% for item in column.items.all|dictsort:"priority" %} 
-            <div class='item'>
-                <br>
+            <br>    
+            <div class='item priority priority{{item.priority}}'>            
                 {{item.name}}
                 (Priority {{item.priority}})
                 <form method="post">
