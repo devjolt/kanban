@@ -4,15 +4,6 @@ from django.contrib.auth.models import User
 
 from datetime import datetime
 
-class Component(models.Model):
-    """Used to define and store areas which projects are associated with. 
-    Base model for Items and Projects
-    """
-    user            = models.ForeignKey(User, on_delete = models.CASCADE, default=1)#associated with user
-    name            = models.CharField(max_length = 50, default = 'name me!')
-    priority        = models.PositiveIntegerField(default = 3)
-    date_added      = models.DateTimeField(default=datetime.now)
-
 class Item(models.Model):
     """Reside in a column with other items
     """

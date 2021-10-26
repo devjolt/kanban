@@ -12,7 +12,7 @@
         {% if user.is_authenticated %}
         
         <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" href="/kanban_app/logout">Logout</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Welcome, {{user.username}}</a>
@@ -20,7 +20,7 @@
         {% else %}
 
       <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="'/kanban_app/login">Login</a>
       </li>
 
       {% endif %}

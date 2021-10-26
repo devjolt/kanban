@@ -2,20 +2,17 @@
 
 {% block content %}
 <nav>
-    <a class='nav-item' href='login/'>Login</a>
-    <a class='nav-item' href='register/'>Register</a>
+    <a class='nav-item' href='/kanban_app/login'>Login</a>
+    <a class='nav-item' href='/kanban_app/register'>Register</a>
 </nav>
-
 <!--Login--> 
-<div class='auth-form-container'>
-<div class="container py-5">
+<div class='form-container'>
     <h1>Login</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ login_form}}
+        {{login_form}}
         <button class="btn btn-primary" type="submit">Login</button>
     </form>
     <p class="text-center">Don't have an account? <a href="/kanban_app/register">Create one</a>.</p>
-</div>
 </div>
 {% endblock %}

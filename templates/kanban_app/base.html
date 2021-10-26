@@ -12,49 +12,71 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
     
         <style>
+            :root{
+                --first:white;
+                --second:rgb(0, 2, 143);
+            }
+
             *{
                 margin:0;
                 padding:0;
                 font-family: 'Open Sans', sans-serif;
+                background:var(--second);
             }
+            
+            .form-container h1,form,span,li,input,label,button,p,a{
+                background: var(--first);
+                color: var(--second);
+            }
+
             main{
-                background-image: linear-gradient(rgb(0, 2, 143) 70%, rgb(255, 255, 255));
+                background-image: linear-gradient( var(--first) 90%, rgb(189, 189, 189));
                 min-height: 70vh;
-                color:white;
+                color:var(--second);
                 margin:10px;
                 padding-top: 10px;
                 border-radius: 10px;
             }
             a{
                 text-decoration: none;
-                color:white;
+                color:var(--second);
                 width: 100vw;
             }
             nav{
-                background: white;
+                background: var(--second);
                 margin:0px;
-                padding:0px;                
+                padding:2px;                
             }
             .nav-item{
+                background: var(--second);
+                color:var(--first);
                 font-size:x-large;
                 max-width:content;
                 transition:0.5s;
                 padding:2px;
                 margin:0px;
-                color:rgb(0, 2, 143)
             }
             .nav-item a{
                 width: 100vw;
             }
             .nav-item:hover{
-                background: rgb(0, 2, 143);
-                color:white;
+                background: var(--first);
+                color:var(--second);
                 transition:0.5s;
             }
             .container a{
                 text-decoration: none;
-                color:white;
+                color:var(--second);
             }
+
+            .form-container{
+                background: var(--first);
+                color: var(--second);
+            }
+
+            
+
+            
 
             .area-list-projects{
             }
@@ -63,9 +85,9 @@
                 font-weight: 300;
                 margin:5px;
                 padding:2px;
-                background:white;
+                background:var(--second);
                 border-radius: 10px;
-                color:rgb(0, 2, 143);
+                color:var(--first);
             }
 
             .project-list{
@@ -74,7 +96,7 @@
             }
             .project-list-item{
                 text-decoration: none;
-                color:white;
+                color:var(--second);
             }
             .form-container{
                 padding:10px;
@@ -109,7 +131,7 @@
                 padding:2px;
                 justify-content: center;
                 border-right:solid;
-                border-color: white;
+                border-color: var(--second);
                 border-width: 2px;
             }
             .create-column-form{
@@ -131,11 +153,11 @@
             }
 
             .item-button{
-                background-color:rgb(0, 2, 143);
+                background-color:var(--first);
                 border-style:solid;
-                border-color: white;
+                border-color: var(--second);
                 border-width: 1px;
-                color:white;
+                color:var(--second);
                 transition: 0.5s;
             }
             .left-button{
@@ -147,10 +169,10 @@
                 border-top-right-radius: 10px;
             }
             .item-button:hover{
-                background-color:white;
+                background-color:var(--second);
                 border-style:solid;
-                border-color: rgb(0, 2, 143);
-                color:rgb(0, 2, 143);
+                border-color: var(--first);
+                color:var(--first);
                 transition: 0.5s;
                 cursor:pointer;
             }
