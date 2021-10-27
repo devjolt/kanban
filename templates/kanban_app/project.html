@@ -6,6 +6,7 @@
     <a class='nav-item' href='/kanban_app/home'>Home</a>
     <a class='nav-item' href='/kanban_app/{{area.name}}'>Return to {{area.name}}</a>
     <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+    <a class="nav-item btn-toggle">Toggle Colour Mode</a>
 </nav>
 
 <h1>{{project.name}}</h1>
@@ -23,15 +24,13 @@
     <div class='column'>
         <h2>{{column.name}}</h2>
         <div class='item-grid'>
-        {% for item in column.items.all|dictsort:"priority" %} 
-            <br>    
+        {% for item in column.items.all|dictsort:"priority" %}   
             <div class='item priority priority{{item.priority}}'>            
+                <br>
                 {{item.name}}
                 (Priority {{item.priority}})
                 <form method="post">
-
                     {% csrf_token %}
-                    
                     <input type="hidden" name='column_position' value = '{{column.position}}'>
                     <input type="hidden" name='column_id' value = '{{column.id}}'>
                     <input type="hidden" name='item_id' value = '{{item.id}}'>
@@ -42,7 +41,12 @@
                         <input class='item-button right-button' type="submit" name='submit' value=">>">     
                     </div>
                     <input type="submit" name='submit' value="Higher">
-                    <input type="submit" name='submit' value="Lower">
+                    <input type="submit" name='submit' value="Lower"><br>
+                    {%if item.blocked%}
+                    <input style='background:red;color:white;' type="submit" name='submit' value="Mark as clear">
+                    {%elif not item.blocked%}
+                    <input style='background:green;color:white;' type="submit" name='submit' value="Mark as blocked">
+                    {%endif%}
                 </form>
             </div>
         {% endfor %}

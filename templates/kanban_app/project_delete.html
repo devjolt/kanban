@@ -3,18 +3,19 @@
 {% block content %}
 
 <nav>
-    <a class='nav-item' href='/kanban_app/areas'>Home</a>
+    <a class='nav-item' href='/kanban_app/home'>Home</a>
     <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+    <a class="nav-item btn-toggle">Toggle Colour Mode</a>
 </nav>
 
-<h2>{{area.name}}</h2>
+<a href='/kanban_app/{{area.name}}'><h1>{{area.name}}</h1></a>
 <form method="post">
     {% csrf_token %}
     <input type="submit" name='submit' value="Confirm delete">
 </form>
 
 {%for project in area.projects.all|dictsort:"priority"%}
-    Project.name
+    {{project.name}}
 {%endfor%}
 
 {% endblock %}

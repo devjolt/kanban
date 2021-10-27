@@ -99,7 +99,10 @@ class AreaList(PriorityView):#all areas owned by user
 
     def post(self, request, *args, **kwargs):
         if request.POST['submit']=='Create new area':
-            area=Area(user=request.user, name=request.POST['new'])
+            user=request.user
+            num_areas=Area.objects.filter(user=user).count() + 1
+            priority=num_areas if num_areas<5 else 5
+            area=Area(user=user, name=request.POST['new'], priority=priority)
             area.save()
             return redirect('kanban_app:areas')
         
@@ -154,6 +157,7 @@ class AreaView(PriorityView):
         
 class ProjectCreate(generic.TemplateView):
     login_required = True
+
     def post(self, request, *args, **kwargs):
         user=request.user
         area_name = kwargs['area']
@@ -185,7 +189,7 @@ class ProjectCreate(generic.TemplateView):
 
         columns=project.columns.all().order_by('position')
         if request.POST['submit']=='Create column':
-            new_position = (len(columns)+1)*2
+            new_position = (len(columns)*2)-1#automatically place new columns second to last
             print(new_position)
             column=Column(name=request.POST['column_name'], position=new_position)
             column.save()
@@ -215,13 +219,13 @@ class ProjectCreate(generic.TemplateView):
             if column.position != len(columns)*2:
                 column.position=position+3#requires position + 3
                 column.save()
+            return refresh
         elif request.POST['submit']=='<<':
             #2, 4, 6, 8 with 4 to move backward
             if column.position!=2:
                 column.position=position-3#requires position - 3
                 column.save()
-
-        return refresh
+            return refresh
 
     def get(self, request, *args, **kwargs):
         user=request.user
@@ -229,11 +233,21 @@ class ProjectCreate(generic.TemplateView):
         project_name = kwargs['project']
         area=Area.objects.filter(user=user, name=area_name).get()
 
+        def auto_columns(project):
+            print('Trying to auto populate')
+            for count,name in enumerate(('Backlog','Done')):
+                column=Column(name=name, position=count*2)
+                column.save()
+                project.columns.add(column.id)
+            new_project.save()
+                
         if project_name == 'new':
             project_name='Fresh new project'
             new_project = Project(user= user, name=project_name)
             new_project.save()
             area.projects.add(new_project.id)
+            
+            
             return redirect('kanban_app:create_project',area_name,project_name)
         
         try:
@@ -253,6 +267,7 @@ class ProjectCreate(generic.TemplateView):
             new_project = Project(user=user, name=new_project_name)
             new_project.save()
             area.projects.add(new_project.id)
+            auto_columns(new_project)
             for col in project.columns.all():
                 new_column = Column(name = col.name, position=col.position)
                 new_column.save()
@@ -349,10 +364,12 @@ class ProjectView(generic.TemplateView):
             #form = NewItemForm(request.POST)
             
             item_name = request.POST['item_name']
-            item = Item(user= request.user, name=item_name)
-            item.save()
             column = Column.objects.filter(position=2, columns__in=[project]).get()#column positions go up in 2s...see create project
-            column.items.add(item.id)#add to new column                
+            num=column.items.count() + 1
+            priority=num if num<5 else 5
+            item = Item(user= request.user, name=item_name, priority=priority)
+            item.save()
+            column.items.add(item.id)#add to new column    
             return refresh
             
         item_id = int(request.POST['item_id'])#needed for all next actions
@@ -395,4 +412,14 @@ class ProjectView(generic.TemplateView):
         elif request.POST['submit']=='Lower':
             print('lower')
             change_priority(5, +1, item)
-        return refresh
+            return refresh
+
+        if request.POST['submit']=='Mark as blocked':
+            item.blocked=True
+            item.save()    
+            return refresh
+        if request.POST['submit']=='Mark as clear':
+            item.blocked=False
+            item.save()
+            return refresh
+        

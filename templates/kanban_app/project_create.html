@@ -5,23 +5,24 @@
 <nav>
     <a class='nav-item' href='/kanban_app/home'>Home</a>
     <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+    <a class="nav-item btn-toggle">Toggle Colour Mode</a>
 </nav>
 
 <div class='form-container'>
     <form method="post">
         {% csrf_token %}
         <div class='project-name-container'>
-            <input class='right' type="text" name='project_name' value='{{project.name}}'>
-            <input class='left item-button'  type="submit" name='submit' value="Change name">
+            <input class='project-name' type="text" name='project_name' value='{{project.name}}'>
+            <input class='project-name-submit' type="submit" name='submit' value="Change name">
         </div>
         <br>
-        <div class='reset-save-quit-container'>
+        <div class='form-container reset-save-quit-container'>
             <input class='item-button' type="submit" name='submit' value="Reset">
             <input class='item-button' type="submit" name='submit' value="Save and use">
             <input class='item-button' type="submit" name='submit' value="Quit and forget">
         </div>
         <br>
-        <div class='create-column-container'>
+        <div class='form-container create-column-container'>
             <input type="text" name='column_name' value='Column name'>
             <input class='item-button' type="submit" name='submit' value="Create column">
         </div>
@@ -33,7 +34,7 @@
             {{column.name}}
             <div class='left-right-delete-button-array'>
             
-            <form class='create-column-form' method="post">
+            <form class='form-container create-column-form' method="post">
                 {% csrf_token %}
                 <div class='item-button-grid'>
                     <input type="hidden" name='column_id' value = '{{column.id}}'>

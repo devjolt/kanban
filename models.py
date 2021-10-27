@@ -11,6 +11,8 @@ class Item(models.Model):
     name            = models.CharField(max_length = 50, default = 'name me!')
     priority        = models.PositiveIntegerField(default = 3)
     date_added      = models.DateTimeField(default=datetime.now)
+    blocked         = models.BooleanField(default=False)
+    comment         = models.TextField(default='Details...')
 
     current_column  = models.PositiveIntegerField(default = 1)
     target_date     = models.DateTimeField(blank = True, null = True)

@@ -5,25 +5,29 @@
         <a class='nav-item' href='/kanban_app/home'>Home</a>
         <a class='nav-item' href='/kanban_app/{{area.name}}/new/create_project'>Create project</a>
         <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+        <a class="nav-item btn-toggle">Toggle Colour Mode</a>
     </nav>
     <br>
-    <h2>{{area.name}} projects:</h1>
-        
+    <h1>{{area.name}} projects:</h1>
+    <br>
     <div class='project-list'>
         {%for project in area.projects.all|dictsort:"priority"%}
-            <br>
             <div class='priority priority{{project.priority}}'>
-                <a class='project-list-item' href='/kanban_app/{{area.name}}/{{project.name}}'><h3>{{project.name}}</h3></a>
-                (Priority {{project.priority}})
+                <a class='project-list-item' href='/kanban_app/{{area.name}}/{{project.name}}'><h3><br>{{project.name}}</h3></a>
+                <p>(Priority {{project.priority}})</p>
                 <form method='POST'>
                     {% csrf_token %}
                     <input type="hidden" name='priority' value="{{project.id}}">
                     <input type="submit" name='submit' value="Higher">
                     <input type="submit" name='submit' value="Lower">
-                </form> 
-                <a href="/kanban_app/{{area.name}}/{{project.name}}/delete_project">Delete this project</a>
-                <a class='project-list-item' href='/kanban_app/{{area.name}}/{{project.name}}/create_project'>Create a new project using this template</a>    
+                </form>
+                <p>
+                    <a href="/kanban_app/{{area.name}}/{{project.name}}/delete_project">Delete this project</a>
+                    <a class='project-list-item' href='/kanban_app/{{area.name}}/{{project.name}}/create_project'>Create a new project using this template</a>    
+                </p>
+
             </div>
+            
             {% endfor %}
     </div>
     

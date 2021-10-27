@@ -13,34 +13,41 @@
     
         <style>
             :root{
+                
+                
+            }
+
+            body{
+                --first:rgb(0, 2, 143);
+                --second:white;
+            }
+
+            body.blue-on-white{
                 --first:white;
                 --second:rgb(0, 2, 143);
             }
+
 
             *{
                 margin:0;
                 padding:0;
                 font-family: 'Open Sans', sans-serif;
                 background:var(--second);
+                color:var(--second);
             }
-            
-            .form-container h1,form,span,li,input,label,button,p,a{
-                background: var(--first);
-                color: var(--second);
-            }
-
             main{
+                background:var(--second)
+            }
+            .main-container{
                 background-image: linear-gradient( var(--first) 90%, rgb(189, 189, 189));
                 min-height: 70vh;
                 color:var(--second);
                 margin:10px;
                 padding-top: 10px;
                 border-radius: 10px;
-            }
+            }          
             a{
                 text-decoration: none;
-                color:var(--second);
-                width: 100vw;
             }
             nav{
                 background: var(--second);
@@ -52,42 +59,69 @@
                 color:var(--first);
                 font-size:x-large;
                 max-width:content;
+                width: 100vw;
                 transition:0.5s;
                 padding:2px;
                 margin:0px;
-            }
-            .nav-item a{
-                width: 100vw;
             }
             .nav-item:hover{
                 background: var(--first);
                 color:var(--second);
                 transition:0.5s;
             }
-            .container a{
-                text-decoration: none;
-                color:var(--second);
+            .btn-toggle{  
+                float: right;
+                text-align: right;
+                max-width: fit-content;
+                padding:0;
+                margin:0;
+                border-radius: 10px;           
             }
-
+            .btn-toggle:hover{
+                cursor: pointer;
+            }
             .form-container{
+                background: var(--first);
+                padding:10px;
+                justify-items: center;
+            }
+            form *{
+                background: var(--second);
+                color: var(--first);
+            }
+            form label,li,p,p a,.helptext, .project-name-container{
                 background: var(--first);
                 color: var(--second);
             }
-
-            
-
-            
-
-            .area-list-projects{
+            .project-name-container{
+                display:grid;
+                grid-template-columns: auto auto;
             }
+            .project-name{
+                justify-self: right;
+                width:25vw;
+            }
+            .project-name-submit{
+                justify-self: left;
+                width:25vw;
+            }
+            .reset-save-quit-container{
+                display:grid;
+                grid-template-columns: auto auto auto; 
+                column-gap: 5px;
+                justify-content: center;
+            }
+            .area-list-projects{
+                display:flex;
+                background-color: var(--first);
+                padding:4px;
+            }
+
             .area-list-project{
+                border-right: solid var(--second) 1px;
                 font-size: large;
                 font-weight: 300;
-                margin:5px;
                 padding:2px;
-                background:var(--second);
-                border-radius: 10px;
-                color:var(--first);
             }
 
             .project-list{
@@ -98,58 +132,47 @@
                 text-decoration: none;
                 color:var(--second);
             }
-            .form-container{
-                padding:10px;
-                justify-items: center;
-            }
-            .project-name-container{
-                display:grid;
-                grid-template-columns: auto auto; 
-            }
-            .left{
-                justify-self: left;
-            }
-            .right{
-                justify-self: right;
-            }
-            .reset-save-quit-container{
-                display:grid;
-                grid-template-columns: 25% 25% 25%; 
-                justify-content: center;
-            }
             
             
             .create-column-container{
                 justify-items: center;
+                
             }
             .columns-grid {
                 display:inline-flex;
+                background: var(--first);;  
             }
 
             .column {
+                background: var(--first);
                 width: 200px;
-                padding:2px;
                 justify-content: center;
-                border-right:solid;
-                border-color: var(--second);
-                border-width: 2px;
-            }
-            .create-column-form{
                 
             }
-            .left-right-delete-button-array{
+            .column h2{
+                padding:2px;
+                border-right:solid var(--second) 1px;
+                background: var(--first);
+                color:var(--second);
+            }
+            
+            .left-right-delete-button-array *{
+                background:var(--first);
             }
             .items-grid {
                 display:grid;
                 grid-template-columns: auto;
+                background: var(--first);
             }
 
             .item {
+                background: var(--first);
                 
             }
             .item-button-grid{
                 display:grid;
                 grid-template-columns: auto auto auto;
+                background: var(--first);
             }
 
             .item-button{
@@ -177,11 +200,12 @@
                 cursor:pointer;
             }
 
-            .priority{
+            .priority a,p,h1,a h3,form{
+                background-color:var(--first);
+                color: var(--second);
                 transition:1s;
+            
             }
-            
-            
             .priority:hover{
                 border:none;
                 transition:0.5s;
@@ -214,12 +238,25 @@
 
         </style>
     </head>
-    <body>
+    <body class="white-on-blue || light-theme">
         <main>
-            {% block content %}
+            <div class='main-container'>
+                {% block content %}
 
 
-            {% endblock %}
-        </main>
+                {% endblock %}
+            </div>
+        </main>    
     </body>
 </html>
+<script>
+// Select the button
+const btn = document.querySelector('.btn-toggle');
+
+// Listen for a click on the button
+btn.addEventListener('click', function() {
+  // Then toggle (add/remove) the .dark-theme class to the body
+  document.body.classList.toggle('blue-on-white');  
+})
+
+</script>
