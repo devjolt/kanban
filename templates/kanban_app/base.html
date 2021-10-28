@@ -14,7 +14,7 @@
         <style>
             :root{
                 
-                
+  
             }
 
             body{
@@ -27,7 +27,6 @@
                 --second:rgb(0, 2, 143);
             }
 
-
             *{
                 margin:0;
                 padding:0;
@@ -38,21 +37,56 @@
             main{
                 background:var(--second)
             }
-            .main-container{
-                background-image: linear-gradient( var(--first) 90%, rgb(189, 189, 189));
-                min-height: 70vh;
-                color:var(--second);
-                margin:10px;
+            .main-upper{
+                position: sticky; 
+                top:-10px;
+                background:var(--first);
+                margin-right:0px;
+                margin-left:0px;
+                margin-top:10px;
+                margin-left: 0;
                 padding-top: 10px;
-                border-radius: 10px;
-            }          
+                border-top-right-radius: 10px;
+                border-top-left-radius: 10px;               
+                background:var(--first);
+                min-width:95%;
+            }
+            .main-container{
+                background:var(--first);
+                min-height: 80vh;
+                min-width:95%;
+                color:var(--second);
+                margin-right:10px;
+                margin-left:10px;
+                margin-top:10px;
+                border-top-right-radius: 10px;
+                border-top-left-radius: 10px;
+            }
+            
+            .main-lower{
+                background-image: linear-gradient( var(--first) 10%, rgb(189, 189, 189));
+                min-height: 10vh;
+                min-width:95vw;
+                color:var(--second);
+                margin-right:10px;
+                margin-left:10px;
+                margin-bottom:10px;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+            } 
             a{
                 text-decoration: none;
             }
             nav{
                 background: var(--second);
                 margin:0px;
-                padding:2px;                
+                padding-top: 2px;
+                padding-bottom: 2px;
+                padding-left:1vw;
+                padding-right:1vw;
+                min-width:95vw;    
+                border-bottom-right-radius:10px;
+                border-top-right-radius: 10px;          
             }
             .nav-item{
                 background: var(--second);
@@ -73,7 +107,10 @@
                 float: right;
                 text-align: right;
                 max-width: fit-content;
-                padding:0;
+                padding-right:6vw;
+                padding-top:0;
+                padding-bottom:0;
+                padding-left:0;
                 margin:0;
                 border-radius: 10px;           
             }
@@ -245,6 +282,8 @@
 
 
                 {% endblock %}
+            </div>
+            <div class='main-lower'>
             </div>
         </main>    
     </body>

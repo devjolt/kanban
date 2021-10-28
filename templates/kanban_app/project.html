@@ -1,24 +1,25 @@
 {% extends 'kanban_app/base.html' %}
 
 {% block content %}
+<div class='main-upper'>
+    <nav>
+        <a class='nav-item' href='/kanban_app/home'>Home</a>
+        <a class='nav-item' href='/kanban_app/{{area.name}}'>Return to {{area.name}}</a>
+        <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+        <a class="nav-item btn-toggle">Toggle Colour Mode</a>
+    </nav>
 
-<nav>
-    <a class='nav-item' href='/kanban_app/home'>Home</a>
-    <a class='nav-item' href='/kanban_app/{{area.name}}'>Return to {{area.name}}</a>
-    <a class='nav-item' href='/kanban_app/logout'>Logout</a>
-    <a class="nav-item btn-toggle">Toggle Colour Mode</a>
-</nav>
-
-<h1>{{project.name}}</h1>
-<br>
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name='item_name' value='New item'>
-    <input type="datetime-local" name="target_time">
-    <!--{{ NewItemForm }}-->
-    <input type="submit" name='submit' value="New item">
-</form>
-<br>
+    <h1>{{project.name}}</h1>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name='item_name' value='New item'>
+        <input type="datetime-local" name="target_time">
+        <!--{{ NewItemForm }}-->
+        <input type="submit" name='submit' value="New item">
+    </form>
+    <br>
+</div>
 <div class='columns-grid'>
     {% for column in columns %}
     <div class='column'>
@@ -55,7 +56,6 @@
     {% endfor %}
 </div>
 {% endblock %}
-
 
 <script>
     $(function () {

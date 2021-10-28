@@ -246,8 +246,7 @@ class ProjectCreate(generic.TemplateView):
             new_project = Project(user= user, name=project_name)
             new_project.save()
             area.projects.add(new_project.id)
-            
-            
+            auto_columns(new_project)
             return redirect('kanban_app:create_project',area_name,project_name)
         
         try:

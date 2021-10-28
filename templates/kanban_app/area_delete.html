@@ -1,11 +1,12 @@
 {% extends 'kanban_app/base.html' %}
 
 {% block content %}
-
-<nav>
-    <a class='nav-item' href='/kanban_app/areas'>Home</a>
-    <a class='nav-item' href='/kanban_app/logout'>Logout</a>
-</nav>
+<div class='main-upper'>
+    <nav>
+        <a class='nav-item' href='/kanban_app/areas'>Home</a>
+        <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+    </nav>
+</div>
 
 <h2>{{area.name}}</h2>
 <form method="post">

@@ -1,15 +1,17 @@
 {% extends 'kanban_app/base.html' %}
 
 {% block content %}
-    <nav>
-        <a class='nav-item' href='/kanban_app/home'>Home</a>
-        <a class='nav-item' href='/kanban_app/{{area.name}}/new/create_project'>Create project</a>
-        <a class='nav-item' href='/kanban_app/logout'>Logout</a>
-        <a class="nav-item btn-toggle">Toggle Colour Mode</a>
-    </nav>
-    <br>
-    <h1>{{area.name}} projects:</h1>
-    <br>
+    <div class='main-upper'>
+        <nav>
+            <a class='nav-item' href='/kanban_app/home'>Home</a>
+            <a class='nav-item' href='/kanban_app/{{area.name}}/new/create_project'>Create project</a>
+            <a class='nav-item' href='/kanban_app/logout'>Logout</a>
+            <a class="nav-item btn-toggle">Toggle Colour Mode</a>
+        </nav>
+        <br>
+        <h1>{{area.name}} projects:</h1>
+        <br>
+    </div>
     <div class='project-list'>
         {%for project in area.projects.all|dictsort:"priority"%}
             <div class='priority priority{{project.priority}}'>
