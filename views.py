@@ -190,7 +190,7 @@ class ProjectCreate(generic.TemplateView):
         columns=project.columns.all().order_by('position')
         if request.POST['submit']=='Create column':
             new_position = (len(columns)*2)-1#automatically place new columns second to last
-            print(new_position)
+            #print(new_position)
             column=Column(name=request.POST['column_name'], position=new_position)
             column.save()
             project.columns.add(column.id)
@@ -200,9 +200,9 @@ class ProjectCreate(generic.TemplateView):
 
         column=Column.objects.filter(id=column_id).get()#current column
         if request.POST['submit']=='X':
-            print(project.columns.all())
+            #print(project.columns.all())
             project.columns.remove(column.id)
-            print(project.columns.all())
+            #print(project.columns.all())
             column = Column.objects.filter(id=column_id).get()
             column.delete()
             return refresh
@@ -234,7 +234,6 @@ class ProjectCreate(generic.TemplateView):
         area=Area.objects.filter(user=user, name=area_name).get()
 
         def auto_columns(project):
-            print('Trying to auto populate')
             for count,name in enumerate(('Backlog','Done')):
                 column=Column(name=name, position=count*2)
                 column.save()
@@ -242,7 +241,7 @@ class ProjectCreate(generic.TemplateView):
             new_project.save()
                 
         if project_name == 'new':
-            project_name='Fresh new project'
+            project_name='To do'
             new_project = Project(user= user, name=project_name)
             new_project.save()
             area.projects.add(new_project.id)
@@ -255,7 +254,7 @@ class ProjectCreate(generic.TemplateView):
         except:
             print('Here goes...')
             projects=Project.objects.filter(user=user, name=project_name).all()
-            print(projects)
+            #print(projects)
             for project in projects[1:]:
                 project.delete()
             project=projects[0]     
@@ -281,7 +280,7 @@ class ProjectCreate(generic.TemplateView):
         for i, col in enumerate(columns):
             col.position=(i+1)*2#allows movement by one either side without juggling other columns
             col.save()
-            print(col.name, col.position)
+            #print(col.name, col.position)
         new_position = len(columns)+1
         context={
             'project':project,
@@ -399,17 +398,17 @@ class ProjectView(generic.TemplateView):
             return refresh
 
         def change_priority(limit, change, item):
-            print(item)
+            #print(item)
             if item.priority != limit:
                 item.priority += change
                 item.save()
         
         if request.POST['submit']=='Higher':
-            print('higher')
+            #print('higher')
             change_priority(1, -1, item)            
             return refresh
         elif request.POST['submit']=='Lower':
-            print('lower')
+            #print('lower')
             change_priority(5, +1, item)
             return refresh
 

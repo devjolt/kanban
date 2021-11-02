@@ -13,7 +13,7 @@
     <br>
     <form method="post">
         {% csrf_token %}
-        <input type="text" name='item_name' value='New item'>
+        <input type="text" name='item_name' placeholder='New item' autofocus>
         <input type="datetime-local" name="target_time">
         <!--{{ NewItemForm }}-->
         <input type="submit" name='submit' value="New item">
