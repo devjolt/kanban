@@ -265,7 +265,6 @@ class ProjectCreate(generic.TemplateView):
             new_project = Project(user=user, name=new_project_name)
             new_project.save()
             area.projects.add(new_project.id)
-            auto_columns(new_project)
             for col in project.columns.all():
                 new_column = Column(name = col.name, position=col.position)
                 new_column.save()
@@ -364,7 +363,6 @@ class ProjectView(generic.TemplateView):
             item.save()
             return refresh
 
-
         if request.POST['submit']=='New item':
             #form = NewItemForm(request.POST)
             
@@ -425,7 +423,6 @@ class ProjectView(generic.TemplateView):
 
         if request.POST['submit']=='Save':
             return save_comments(request)
-
 
         if request.POST['submit']=='Mark as blocked':
             save_comments(request)
