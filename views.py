@@ -226,7 +226,7 @@ class ProjectCreate(generic.TemplateView):
                 column.position=position-3#requires position - 3
                 column.save()
             return refresh
-
+        
     def get(self, request, *args, **kwargs):
         user=request.user
         area_name = kwargs['area']
@@ -336,6 +336,7 @@ class AreaDelete(generic.TemplateView):
         return redirect('kanban_app:areas')
 
 class ProjectView(generic.TemplateView):
+
     login_required = True
     def get(self, request, *args, **kwargs):
         area_name = kwargs['area']
@@ -357,6 +358,12 @@ class ProjectView(generic.TemplateView):
         area=Area.objects.filter(user=request.user, name=area_name).get()
         project=Project.objects.filter(user=request.user,name=project_name).get() 
         refresh = redirect('kanban_app:project',area_name,project_name)
+
+        def save_comments(request):
+            item.comment=request.POST['comment']            
+            item.save()
+            return refresh
+
 
         if request.POST['submit']=='New item':
             #form = NewItemForm(request.POST)
@@ -391,9 +398,11 @@ class ProjectView(generic.TemplateView):
                 new_column.items.add(item.id)#add to new column
 
         if request.POST['submit']=='<<':
+            save_comments(request)
             move_item(2, -2, column, item, column_position)
             return refresh
         elif request.POST['submit']=='>>':
+            save_comments(request)
             move_item(len(project.columns.all())*2, 2, column, item, column_position)               
             return refresh
 
@@ -405,18 +414,26 @@ class ProjectView(generic.TemplateView):
         
         if request.POST['submit']=='Higher':
             #print('higher')
+            save_comments(request)
             change_priority(1, -1, item)            
             return refresh
         elif request.POST['submit']=='Lower':
             #print('lower')
+            save_comments(request)
             change_priority(5, +1, item)
             return refresh
 
+        if request.POST['submit']=='Save':
+            return save_comments(request)
+
+
         if request.POST['submit']=='Mark as blocked':
+            save_comments(request)
             item.blocked=True
             item.save()    
             return refresh
         if request.POST['submit']=='Mark as clear':
+            save_comments(request)
             item.blocked=False
             item.save()
             return refresh
